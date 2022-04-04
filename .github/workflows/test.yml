@@ -1,25 +1,17 @@
 name: "units-test"
 on:
   pull_request:
-  push:
     branches:
       - main
-      - 'releases/*'
+      - master
+    types: [closed]
 
 jobs:
-  # unit tests
-  units:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - run: npm ci
-    - run: npm test
-
-  # test action works running from the graph
   test:
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./
       with:
-        milliseconds: 1000
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
