@@ -57,6 +57,6 @@ function getNewVersion(version) {
     }
   }
   return splitVersions.join(".");
-},
+}
 
 run();
