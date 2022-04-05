@@ -24,15 +24,12 @@ async function run() {
   } else {
     latestReleaseTag = releases.data[0].tag_name;
   }
-  const latestReleaseTagArray = latestReleaseTag.split(".");
-  const majorVersion = latestReleaseTagArray[0];
-  const minorVersion = Number(latestReleaseTagArray[1]);
-  // Create the new release
+
   try {
     const createReleaseResponse = await github.rest.repos.createRelease({
       owner,
       repo,
-      tag_name: `${majorVersion}.${minorVersion + 1}.0`,
+      tag_name: getNewVersion(latestReleaseTag),
       name: title,
       body: body ? body : "",
     });
@@ -45,5 +42,20 @@ async function run() {
     console.error(error);
   }
 }
+
+getNewVersion(version) {
+  for (let splitVersionIndex = 2; splitVersionIndex >= 0; splitVersionIndex--) {
+    if (splitVersionIndex === 2) {
+     splitVersions[splitVersionIndex]++;
+    }
+    if (splitVersions[splitVersionIndex] > 99 && splitVersionIndex !== 0) {
+     splitVersions[splitVersionIndex] = 0;
+     if (splitVersions[splitVersionIndex - 1] !== undefined) {
+      splitVersions[splitVersionIndex - 1]++;
+     }
+    }
+  }
+  return splitVersions.join(".");
+},
 
 run();
