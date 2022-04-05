@@ -43,7 +43,7 @@ async function run() {
   }
 }
 
-getNewVersion(version) {
+function getNewVersion(version) {
   let splitVersions = version.split('.');
   for (let splitVersionIndex = 2; splitVersionIndex >= 0; splitVersionIndex--) {
     if (splitVersionIndex === 2) {
