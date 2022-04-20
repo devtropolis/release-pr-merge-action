@@ -6,6 +6,7 @@ async function run() {
   const github = getOctokit(repo_token);
   // Get informations from the context of the action
   const { owner, repo } = context.repo;
+  const { number } = context.payload.issue;
   const { title, body } = context.payload.pull_request;
   let releases;
   try {
@@ -24,6 +25,19 @@ async function run() {
   } else {
     latestReleaseTag = releases.data[0].tag_name;
   }
+  let tags;
+  let tagString = " tags: "
+  try {
+    tags = await github.rest.issues.listLabelsOnIssue({
+      owner,
+      repo,
+      number,
+    });
+    tagString = tags.reduce((prev, tag, index) => prev + tag.name + (index !== tags.length - 1 ? ', ' : '', tagString));
+  } catch (error) {
+    console.error("An error occurred while listing tags");
+    console.error(error);
+  }
 
   try {
     const createReleaseResponse = await github.rest.repos.createRelease({
@@ -31,7 +45,7 @@ async function run() {
       repo,
       tag_name: getNewVersion(latestReleaseTag),
       name: title,
-      body: body ? body : "",
+      body: body ? body + '\r\n' + tagString : "",
     });
     if(createReleaseResponse.status !== 201) {
       console.error("An error occurred while creating release");
