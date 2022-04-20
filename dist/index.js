@@ -8502,8 +8502,7 @@ async function run() {
       repo,
       issue_number: number,
     })
-    console.log(labels);
-    labelString = labels.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
+    labelString = labels.data.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
   } catch (error) {
     console.error("An error occurred while listing labels");
     console.error(error);
