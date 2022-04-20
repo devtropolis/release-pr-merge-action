@@ -8497,11 +8497,14 @@ async function run() {
   let labels;
   let labelString = " labels: "
   try {
-    labels = await github.rest.pulls.get({
+    let pull = await github.rest.pulls.get({
       owner,
       repo,
       number,
-    }).labels;
+    })
+    console.log(pull);
+    console.log(pull.labels);
+    labels = pull.labels;
     labelString = labels.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
   } catch (error) {
     console.error("An error occurred while listing labels");
