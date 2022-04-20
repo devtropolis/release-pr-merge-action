@@ -32,11 +32,12 @@ async function run() {
       repo,
       issue_number: number,
     })
-    labelString = labels.data.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
   } catch (error) {
     console.error("An error occurred while listing labels");
     console.error(error);
   }
+  labelString = labels.data.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
+  console.log(labelString);
 
   try {
     const createReleaseResponse = await github.rest.repos.createRelease({
