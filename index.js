@@ -27,11 +27,12 @@ async function run() {
   let labels;
   let labelString = " labels: "
   try {
-    let labels = await github.rest.issues.listLabelsOnIssue({
+    labels = await github.rest.issues.listLabelsOnIssue({
       owner,
       repo,
       issue_number: number,
     })
+    console.log(labels);
     labelString = labels.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
   } catch (error) {
     console.error("An error occurred while listing labels");
