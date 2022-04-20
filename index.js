@@ -37,7 +37,6 @@ async function run() {
     console.error(error);
   }
   labelString = labels.data.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : ''), labelString);
-  console.log(labelString);
 
   try {
     const createReleaseResponse = await github.rest.repos.createRelease({
@@ -45,7 +44,7 @@ async function run() {
       repo,
       tag_name: getNewVersion(latestReleaseTag),
       name: title,
-      body: body ? body + '\r\n' + labelString : "",
+      body: body ? body + '\r\n' + labelString : "" + '\r\n' + labelString,
     });
     if(createReleaseResponse.status !== 201) {
       console.error("An error occurred while creating release");
