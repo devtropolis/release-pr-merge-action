@@ -8494,17 +8494,17 @@ async function run() {
   } else {
     latestReleaseTag = releases.data[0].tag_name;
   }
-  let tags;
-  let tagString = " tags: "
+  let labels;
+  let labelString = " labels: "
   try {
-    tags = await github.rest.issues.listLabelsOnIssue({
+    labels = await github.rest.pulls.get({
       owner,
       repo,
       number,
-    });
-    tagString = tags.reduce((prev, tag, index) => prev + tag.name + (index !== tags.length - 1 ? ', ' : '', tagString));
+    }).labels;
+    labelString = labels.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : '', labelString));
   } catch (error) {
-    console.error("An error occurred while listing tags");
+    console.error("An error occurred while listing labels");
     console.error(error);
   }
 
@@ -8514,7 +8514,7 @@ async function run() {
       repo,
       tag_name: getNewVersion(latestReleaseTag),
       name: title,
-      body: body ? body + '\r\n' + tagString : "",
+      body: body ? body + '\r\n' + labelString : "",
     });
     if(createReleaseResponse.status !== 201) {
       console.error("An error occurred while creating release");
