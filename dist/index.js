@@ -8476,6 +8476,9 @@ async function run() {
   const github = getOctokit(repo_token);
   // Get informations from the context of the action
   const { owner, repo } = context.repo;
+  console.log(context);
+  console.log(context.payload);
+  console.log(context.payload.issue);
   const { number } = context.payload.issue;
   const { title, body } = context.payload.pull_request;
   let releases;
