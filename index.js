@@ -1,5 +1,5 @@
-import { core } from "@actions/core";
-import { getOctokit, context } from "@actions/github";
+const core = require("@actions/core");
+const { getOctokit, context } = require("@actions/github");
 
 async function run() {
   const repo_token = core.getInput("repo-token");
