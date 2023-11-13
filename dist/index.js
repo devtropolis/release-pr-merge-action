@@ -33127,17 +33127,17 @@ async function run() {
     if (createReleaseResponse.status !== 201) {
       console.error("An error occurred while creating release");
       console.error(createReleaseResponse);
-      core.setFailed(error.message);
+      core.setFailed(createReleaseResponse?.message ?? "An error occurred while creating release");
       return;
     }
+
+    console.info('Created New Release', { response: createReleaseResponse });
   } catch (error) {
     console.error("An error occured while creating the release");
     console.error(error);
     core.setFailed(error.message);
     return;
   }
-
-  console.info('Created New Release', { response: createReleaseResponse });
 }
 
 function getNewVersion(version) {
