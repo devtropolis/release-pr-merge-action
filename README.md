@@ -1,1 +1,1 @@
-# release-pr-merge-action
+# release-pr-merge-action test
