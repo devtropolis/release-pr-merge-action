@@ -33159,6 +33159,8 @@ async function run() {
     console.info("Label String", { string: labelString });
   }
 
+  const latestReleaseTag = release.data.tag_name;
+
   try {
     const createReleaseResponse = await github.rest.repos.createRelease({
       owner,
