@@ -33151,7 +33151,7 @@ async function run() {
     console.error(error);
   }
 
-  if (labels) {
+  if (labels?.status === 200) {
     console.info("Found Release Labels", { labelsResponse: labels });
 
     labelString = labels.data.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : ''), labelString);
