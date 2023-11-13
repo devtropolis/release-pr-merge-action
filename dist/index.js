@@ -33135,7 +33135,7 @@ async function run() {
     return;
   }
 
-  console.info("Found Latest Release", { release: release.data });
+  console.info("Found Latest Release", { releaseResponse: release });
 
   let labels = null;
   let labelString = " labels: "
@@ -33151,9 +33151,9 @@ async function run() {
     console.error(error);
   }
 
-  console.info("Found Release Labels", { labels: labels.data });
-
   if (labels) {
+    console.info("Found Release Labels", { labelsResponse: labels });
+
     labelString = labels.data.reduce((prev, label, index) => prev + label.name + (index !== labels.length - 1 ? ', ' : ''), labelString);
 
     console.info("Label String", { string: labelString });
