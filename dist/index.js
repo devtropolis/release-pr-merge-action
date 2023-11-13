@@ -33122,7 +33122,7 @@ async function run() {
       tag_name: getNewVersion(latestReleaseTag),
       name: title,
       body: body ? body + '\r\n' + labelString : "" + '\r\n' + labelString,
-      make_latest: true,
+      make_latest: "true",
     });
     if (createReleaseResponse.status !== 201) {
       console.error("An error occurred while creating release");
